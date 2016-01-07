@@ -1,0 +1,54 @@
+﻿*{ margin: 0;padding: 0;}
+html{ background: #D9D9D9;}
+.container .row{ background: #fff;}
+.tit-head a, h1,h2{ color: #444;}
+.form h1{ font-size: 30px;}
+.form h2{ font-size: 18px;}
+footer{ text-align: center;padding: 20px 0px;font-size: 13px;}
+body {font-size: .85em; color: #232323;background-color: #D9D9D9;font-family: Tahoma;}
+.clear,.clear-1{ clear: both;position: relative;}
+.clear:after,.clear-1:after{ clear: both;display: block;content: " ";height: 0;line-height: 0;visibility: hidden;}
+
+.p-control{ text-align: right;padding-right: 10px;padding-top: 10px;}
+.mr-right10{ margin-right: 10px;}
+
+.grid-order{ width: 100%;height: 100%;}
+.dx-header-row{ text-align: center;font-weight: normal;text-transform: capitalize;}
+
+.btn-action{ color: #606060;text-decoration: underline;font-size: 14px;cursor: pointer;}
+.p-order,.p-order .box-grid{font-family: Tahoma !important;}
+.dx-row.dx-column-lines.dx-header-row{ background-color: #304967;color: #ffffff;}
+
+#gridPosition .dx-datagrid-headers{border: 1px solid #ccc;border-top: none;border-bottom: none;}
+#gridPosition .dx-datagrid-rowsview{ border: 1px solid #ccc;border-top: none;}
+
+.grid-order{ margin-top: 10px;}
+.grid-order .dx-datagrid-headers{border: 1px solid #ccc;border-bottom: none;}
+.grid-order .dx-datagrid-rowsview{ border: 1px solid #ccc;border-top: none;}
+.grid-order table tbody tr:nth-child(2n){ background-color: #eee;}
+.grid-order table tbody tr:hover{background-color: #eee;}
+
+.panel-detail{ text-align: right;padding-top: 10px;}
+
+.dx-datagrid-text-content{ text-align: center;font-size: 16px;}
+
+.pn-control{ position: relative;}
+#summary{ padding-left: 20px;}
+#btnAdd{position: absolute;z-index: 5;right: 15%;top: 1px;}
+
+#frmPosition p strong{ font-size: 14px;font-weight: normal;}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+.pagination {cursor: pointer; }
+.shortInputSearch {width: 300px !important;float: right !important;}

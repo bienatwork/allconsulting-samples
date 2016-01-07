@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    <link href='/logo.png' rel="shortcut icon" />
+
+    <link rel="stylesheet" type="text/css" href="/Content/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/dx.common.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/dx.light.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/Site.css" />
+
+    <script src="/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/Vendors/angular.min.js"></script>
+    <script src="/Scripts/Vendors/angular-route.js"></script>
+    <script src="/Scripts/Vendors/angular-sanitize.min.js"></script>
+    <script src="/Scripts/jquery.globalize/globalize.js"></script>
+    <script src="/Scripts/dx.webappjs.js"></script>
+    <script src="/Scripts/js-samples/my-common.js"></script>
+    <script type="text/javascript" src="/Scripts/js-samples/app.js"></script>
+    <script type="text/javascript" src="/Scripts/js-samples/services.js"></script>
+    <script type="text/javascript" src="/Scripts/js-samples/controllers.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" style="border-top: 1px solid #ccc;">
+            <div class="col-sm-12">
+                <footer> &copy; 2016 Kloon - Demonstration AllConsulting</footer>
+            </div>
+        </div>
+    </div>
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(function () {
+            $(window).hover(function () {
+                $('iframe').remove();
+            });
+        });
+    </script>
+</body>
+</html>
+
