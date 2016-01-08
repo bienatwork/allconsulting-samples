@@ -1,6 +1,6 @@
 ﻿angular.module('myApp.controllers', []).
     controller('orderController', function($scope, $filter, orderService) {
-        document.title = "List Order";
+        document.title = "All Consulting - Samples: Orders Management";
         $scope.showAfterLoad = false;
         $scope.showLoadPanel = true;
         $scope.searchBefor = { options: {}, totalRows: 0, data: {} };
@@ -64,13 +64,13 @@
             {
                 alignment: 'center',
                 caption: "Actions",
-                width: '100px',
+                width: '150px',
                 cellTemplate: function(cell, options) {
-                    $('<span title="Edit"/>').addClass('btn btn-default btn-xs mr-right10').on('click', function(e) {
+                    $('<span title="Edit"/>').addClass('btn btn-info btn-xs mr-right10').on('click', function(e) {
                         location.hash = '#/detail/' + options.data.OrderId;
-                    }).html('<i class="glyphicon glyphicon-pencil"></i>').appendTo(cell);
-                    $('<span title="Delete"/>').addClass('btn btn-default btn-xs')
-                        .on("click", $.proxy($scope.eventDeleteOrder, this, options)).html('<i class="glyphicon glyphicon-remove"></i>').appendTo(cell);
+                    }).html('Edit <i class="glyphicon glyphicon-pencil"></i>').appendTo(cell);
+                    $('<span title="delete"/>').addClass('btn btn-danger btn-xs')
+                        .on("click", $.proxy($scope.eventDeleteOrder, this, options)).html('Delete <i class="glyphicon glyphicon-remove"></i>').appendTo(cell);
                 }
             }
         ];
@@ -87,11 +87,8 @@
             });
         };
         $scope.btnAddNewOrder = function(e) {
-            document.title = "Add order";
+            document.title = "All Consulting - Samples: New Order";
             location.hash = '#/add';
-            //console.log(location.hash);
-            //console.log(location.origin);
-            //console.log(location.pathname);
         };
         $scope.masterDetail = {
             enabled: true,
@@ -113,9 +110,9 @@
                     var panelDev = $('<div class="panel-detail"/>');
                     $('<button/>').dxButton({
                             type: 'success',
-                            text: 'ReOrder',
+                            text: 'Re-Order',
                             onClick: function(x) {
-                                var result = DevExpress.ui.dialog.confirm("Are you sure you want to reorder this record?");
+                                var result = DevExpress.ui.dialog.confirm("Are you sure you want to re-order this one?");
                                 $(".dx-dialog .dx-overlay-content .dx-popup-title").hide();
                                 result.done(function(ok) {
                                     if (ok) {
@@ -129,7 +126,7 @@
                                             if (response1 != null) {
                                                 // validate DeliveryDate
                                                 location.hash = '#/detail/' + response1.OrderId;
-                                                DevExpress.ui.notify('Your reorder success!', "success", 3000);
+                                                DevExpress.ui.notify('Re-order has been done successfully!', "success", 3000);
                                             }
                                         });
                                     }
@@ -158,8 +155,7 @@
         };
     }).
     controller('detailorder', function($scope, $routeParams, $filter, orderService) {
-        document.title = "Add order";
-        $scope.titleForm = 'Add order';
+        $scope.titleForm = 'New Order';
         $scope.showLoadPanel = false;
         $scope.disabledBtnAdd = false;
         $scope.dateNow = null;
@@ -170,6 +166,9 @@
         $scope.order = new OrderNew();
         $scope.ListPositionOrderDto = [];
         $scope.listPositionOrderRemove = [];
+        $scope.showError = false;
+
+        $scope.showPositionErrors = false;
 
         if ($scope.orderId != undefined && $scope.orderId > 0) {
             $scope.showLoadPanel = true;
@@ -185,12 +184,12 @@
                     $scope.ListPositionOrderDto = $.extend($scope.ListPositionOrderDto, d.ListPositionOrderDto);
                     $scope.popupBtnReorderVisible = true;
 
-                    $scope.titleForm = 'Edit order';
-                    document.title = "Edit order - " + d.CustomerNumber;
+                    $scope.titleForm = 'Edit Order';
+                    document.title = "All Consulting - Samples: Edit order - " + d.CustomerNumber;
                     $scope.showLoadPanel = false;
                 } else {
                     location.hash = '#/';
-                    DevExpress.ui.notify('This order not exsist...', "error", 4000);
+                    DevExpress.ui.notify('Opps! The order does not exsist...', "error", 4000);
                 }
             }).error(function(e) {
                 console.log(e);
@@ -208,7 +207,8 @@
             var result = e.validationGroup.validate();
             if (result.isValid) {
                 if ($scope.order.ListPositionOrderDto.length < 1) {
-                    $("#summary").append('<div style="color:#ff0000;">Order must have at least one OrderPosition.</div>');
+                    $("#summary").append('<div style="color:#ff0000;">Order must have at least one OrderPosition</div>');
+                    $scope.showError = true;
                     return;
                 }
                 $scope.disabledBtnAdd = false;
@@ -235,6 +235,9 @@
                         }
                     });
                 }
+                $scope.showError = false;
+            } else {
+                $scope.showError = true;
             }
         };
         $scope.formBtnCancelOption = function(e) {
@@ -256,7 +259,7 @@
             }
         };
         //************************************************  Validate  ********************************************
-        $scope.validate1 = { validationRules: [{ type: "required", message: 'Customer Number not empty.' }] };
+        $scope.validate1 = { validationRules: [{ type: "required", message: 'Customer Number is required.' }] };
         $scope.validate2 = {
             validationRules: [
                 {
@@ -269,14 +272,14 @@
                         return $scope.dateNow;
                     },
                     reevaluate: true,
-                    message: 'DeliveryDate of order must be in the future.',
+                    message: 'Delivery Date must be in the future.',
                     comparisonType: '>'
                 }
             ]
         };
         //************************************************  form add, edit position  ********************************************
-        $scope.formBtnPosition = function(e) {
-            //$(".modal").modal();
+        $scope.formBtnPosition = function (e) {
+            $scope.showPositionErrors = false;
             $scope.objectPosition = new PositionOrder();
             var validGroup = $("#formPosition").dxValidationGroup('instance'); //.reset();
             if (validGroup != null) validGroup.reset();
@@ -284,7 +287,8 @@
             $("#popupPosition").dxPopup('instance').show();
             $("#test").dxTextBox('instance').focus();
         };
-        $scope.formPositionEventUpdate = function(e) {
+        $scope.formPositionEventUpdate = function (e) {
+            $scope.showPositionErrors = false;
             var result = e.validationGroup.validate();
             if (result.isValid) {
                 if (angular.equals($scope.formTitlePopupPosition, 'Add Position')) {
@@ -304,6 +308,10 @@
                     $scope.objectPosition.PositionNumber = 1;
                     var validGroup = $("#formPosition").dxValidationGroup('instance'); //.reset();
                     if (validGroup != null) validGroup.reset();
+
+                    // Close the modal after saving position successfully
+                    $("#popupPosition").dxPopup('instance').hide();
+
                 } else {
                     var index = $scope.objectPosition.PositionOrderId;
                     var positionOrderId = $scope.order.ListPositionOrderDto[index].PositionOrderId;
@@ -314,6 +322,12 @@
                 }
 
                 $scope.ListPositionOrderDto = angular.extend([], $scope.order.ListPositionOrderDto);
+
+                // Hide the validation summary area
+                $scope.showPositionErrors = false;
+            } else {
+                // Hide the validation summary area
+                $scope.showPositionErrors = true;
             }
         };
         $scope.formPositionEventClose = function(e) {
@@ -329,9 +343,9 @@
             $("#gridPosition").dxDataGrid('instance').refresh();
         };
         $scope.positionColumn = [
-            { dataField: 'Text', dataType: 'string', caption: 'Text', validationRules: [{ type: "required", message: 'Not empty' }] },
+            { dataField: 'Text', dataType: 'string', caption: 'Text', validationRules: [{ type: "required", message: 'Text is required.' }] },
             { dataField: 'Pieces', dataType: 'string', caption: 'Pieces', celltemplate: function(cell, options) { $(cell).attr('tabindex', -1); } },
-            { dataField: 'PositionNumber', dataType: 'number', caption: 'Number', validationRules: [{ type: "required", message: 'Not empty' }, { type: 'range', min: 1 }] },
+            { dataField: 'PositionNumber', dataType: 'number', caption: 'Number', validationRules: [{ type: "required", message: 'Number is required.' }, { type: 'range', min: 1 }] },
             {
                 dataField: 'Price',
                 dataType: 'number',
@@ -339,15 +353,15 @@
                 caption: 'Price',
                 format: "currency",
                 cellTemplate: function(cell, option) { $(cell).append($filter("currency")(option.data.Price)); },
-                validationRules: [{ type: "required", message: 'Not empty' }, { type: 'range', min: 0, message: 'Price greater than or equal 0.' }]
+                validationRules: [{ type: "required", message: 'Price is required.' }, { type: 'range', min: 0, message: 'Price must equal or be greater than 0.' }]
             },
             {
                 alignment: 'center',
                 allowEditing: false,
                 caption: 'Actions',
-                width: '100px',
+                width: '150px',
                 cellTemplate: function(cell, options) {
-                    $('<span title="Edit"/>').addClass('btn btn-default btn-xs mr-right10').on('click', function(e) {
+                    $('<span title="Edit"/>').addClass('btn btn-info btn-xs mr-right10').on('click', function(e) {
                         options.component.byKey(options.key).done(function(o) {
                             var index = $scope.order.ListPositionOrderDto.indexOf(o);
                             $scope.objectPosition = angular.extend({}, $scope.order.ListPositionOrderDto[index]);
@@ -355,8 +369,8 @@
                             $scope.formTitlePopupPosition = "Edit Position"; //" - " + $scope.objectPosition.Text;
                             $("#popupPosition").dxPopup('instance').show();
                         });
-                    }).html('<i class="glyphicon glyphicon-pencil"></i>').appendTo(cell);
-                    $('<span title="Delete"/>').addClass('btn btn-default btn-xs')
+                    }).html('Edit&nbsp;<i class="glyphicon glyphicon-pencil"></i>').appendTo(cell);
+                    $('<span title="Delete"/>').addClass('btn btn-danger btn-xs')
                         .on('click', function(e) {
                             var result = DevExpress.ui.dialog.confirm("Are you sure you want to delete this record?");
                             $(".dx-dialog .dx-overlay-content .dx-popup-title").hide();
@@ -377,7 +391,7 @@
                                     });
                                 }
                             });
-                        }).html('<i class="glyphicon glyphicon-remove"></i>').appendTo(cell);
+                        }).html('Delete&nbsp;<i class="glyphicon glyphicon-remove"></i>').appendTo(cell);
                 }
             }
         ];

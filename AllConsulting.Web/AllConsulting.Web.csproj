@@ -185,6 +185,7 @@
     <Content Include="Content\icons\dxicons.woff" />
     <Content Include="Content\icons\dxicons.ttf" />
     <Content Include="Content\icons\dxicons.eot" />
+    <None Include="Properties\PublishProfiles\allconsulting.kloon.net.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="partials\orders\list.html" />
     <Content Include="Scripts\devextreme-localization\dx.webappjs.de.js" />
@@ -573,7 +574,6 @@
     <Content Include="Scripts\js-samples\app.js" />
     <Content Include="Scripts\js-samples\controllers.js" />
     <Content Include="Scripts\js-samples\my-common.js" />
-    <Content Include="Scripts\js-samples\script_Angular.js" />
     <Content Include="Scripts\js-samples\services.js" />
     <Content Include="Scripts\jszip.js" />
     <Content Include="Scripts\jszip.min.js" />

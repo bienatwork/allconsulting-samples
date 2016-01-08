@@ -59,41 +59,9 @@
     <Compile Include="Infrastructure\IDbFactory.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201512170443408_InitialCreated.cs" />
-    <Compile Include="Migrations\201512170443408_InitialCreated.Designer.cs">
-      <DependentUpon>201512170443408_InitialCreated.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512210357557_AlteredOrderTable.cs" />
-    <Compile Include="Migrations\201512210357557_AlteredOrderTable.Designer.cs">
-      <DependentUpon>201512210357557_AlteredOrderTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512210636341_AlterelOrderTable.cs" />
-    <Compile Include="Migrations\201512210636341_AlterelOrderTable.Designer.cs">
-      <DependentUpon>201512210636341_AlterelOrderTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512250857480_Alter.cs" />
-    <Compile Include="Migrations\201512250857480_Alter.Designer.cs">
-      <DependentUpon>201512250857480_Alter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512280743501_Alter1.cs" />
-    <Compile Include="Migrations\201512280743501_Alter1.Designer.cs">
-      <DependentUpon>201512280743501_Alter1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512280900575_Alter2.cs" />
-    <Compile Include="Migrations\201512280900575_Alter2.Designer.cs">
-      <DependentUpon>201512280900575_Alter2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512280948400_Alter3.cs" />
-    <Compile Include="Migrations\201512280948400_Alter3.Designer.cs">
-      <DependentUpon>201512280948400_Alter3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601060644331_RowVersion.cs" />
-    <Compile Include="Migrations\201601060644331_RowVersion.Designer.cs">
-      <DependentUpon>201601060644331_RowVersion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601060723403_AlterOrderOnUpdate.cs" />
-    <Compile Include="Migrations\201601060723403_AlterOrderOnUpdate.Designer.cs">
-      <DependentUpon>201601060723403_AlterOrderOnUpdate.cs</DependentUpon>
+    <Compile Include="Migrations\201601070717301_InitialDbCreation.cs" />
+    <Compile Include="Migrations\201601070717301_InitialDbCreation.Designer.cs">
+      <DependentUpon>201601070717301_InitialDbCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,32 +82,8 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512170443408_InitialCreated.resx">
-      <DependentUpon>201512170443408_InitialCreated.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512210357557_AlteredOrderTable.resx">
-      <DependentUpon>201512210357557_AlteredOrderTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512210636341_AlterelOrderTable.resx">
-      <DependentUpon>201512210636341_AlterelOrderTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512250857480_Alter.resx">
-      <DependentUpon>201512250857480_Alter.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512280743501_Alter1.resx">
-      <DependentUpon>201512280743501_Alter1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512280900575_Alter2.resx">
-      <DependentUpon>201512280900575_Alter2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512280948400_Alter3.resx">
-      <DependentUpon>201512280948400_Alter3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601060644331_RowVersion.resx">
-      <DependentUpon>201601060644331_RowVersion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601060723403_AlterOrderOnUpdate.resx">
-      <DependentUpon>201601060723403_AlterOrderOnUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601070717301_InitialDbCreation.resx">
+      <DependentUpon>201601070717301_InitialDbCreation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

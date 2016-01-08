@@ -1,5 +1,8 @@
 ﻿*{ margin: 0;padding: 0;}
 html{ background: #D9D9D9;}
+/*.dx-widget {
+    font-family: "Tahoma", "Segoe UI", "Helvetica", "Verdana", "sans-serif";
+}*/
 .container .row{ background: #fff;}
 .tit-head a, h1,h2{ color: #444;}
 .form h1{ font-size: 30px;}
@@ -52,3 +55,7 @@ textarea {
 
 .pagination {cursor: pointer; }
 .shortInputSearch {width: 300px !important;float: right !important;}
+
+.dx-field-label {
+    color: #333 !important;
+}

@@ -255,7 +255,7 @@ namespace AllConsulting.Web.Services
                _positionRepository.Add(positionOrder);
             }
             _unitOfWork.Commit();
-            return null; //OrderById(order.ID.ToString(), DateTime.Now.TimeOfDay.ToString());
+            return OrderById(order.ID.ToString(), DateTime.Now.TimeOfDay.ToString());
         }
 
         public List<PositionOrderDto> GetPossitionList(string id, string key)

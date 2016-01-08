@@ -1,11 +1,11 @@
-﻿<div class="p-order" ng-show="showAfterLoad">
-    <h1 class="tit-head"><a style="color: #304967" href="#/">Order list</a></h1>
+﻿<h1 class="page-header">Orders Management</h1>
+<div class="p-order" ng-show="showAfterLoad">
     <div class="clear-1">
         <div id="txtSearch" dx-text-box="{mode:'search',placeholder:'Search...',onValueChanged:eventSearchFullOrder,onEnterKey:eventEnterSearchFullOrder}" style="float:right;"></div>
         <div dx-button="{type:'success', icon:'add',onClick:btnAddNewOrder}" style="float:right;margin-right:10px;"></div>
     </div>
-    <div id="gridOrder" class="grid-order" dx-data-grid="{paging: { pageSize: 20 },
-            pager: { showPageSizeSelector: true, allowedPageSizes: [20, 30, 40], showInfo: true },
+    <div id="gridOrder" class="grid-order" dx-data-grid="{paging: { pageSize: 10 },
+            pager: { showPageSizeSelector: true, allowedPageSizes: [10,20, 30, 40], showInfo: true },
             dataSource:dataSource,columns:orderColumns,
             filterRow: { visible: true, showOperationChooser: true },
             masterDetail:masterDetail,

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="viewport" content="width=device-width" />
     <link href='/logo.png' rel="shortcut icon" />
-
+    <title>All-Consulting Sample - Order Management</title>
     <link rel="stylesheet" type="text/css" href="/Content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/Content/bootstrap-theme.css" />
     <link rel="stylesheet" type="text/css" href="/Content/dx.common.css" />
@@ -25,28 +25,42 @@
     <script type="text/javascript" src="/Scripts/js-samples/controllers.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                @RenderBody()
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/">All Consulting - Samples</a>
             </div>
+            <div id="navbar" class="navbar-collapse collapse"></div>
+        </div>
+    </nav>
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        <div class="col-sm-12" style="padding-bottom: 10px;" ng-cloak>
+            @RenderBody()
         </div>
     </div>
-    <div class="container">
-        <div class="row" style="border-top: 1px solid #ccc;">
-            <div class="col-sm-12">
-                <footer> &copy; 2016 Kloon - Demonstration AllConsulting</footer>
-            </div>
+</div>
+<div class="container">
+    <div class="row" style="border-top: 1px solid #ccc;">
+        <div class="col-sm-12">
+            <footer> &copy; 2016 Kloon - Demonstration AllConsulting</footer>
         </div>
     </div>
-    @RenderSection("scripts", required: false)
-    <script type="text/javascript">
-        $(function () {
-            $(window).hover(function () {
-                $('iframe').remove();
-            });
+</div>
+@RenderSection("scripts", required: false)
+<script type="text/javascript">
+    $(function() {
+        $(window).hover(function() {
+            $('iframe').remove();
         });
-    </script>
+    });
+</script>
 </body>
 </html>
 
