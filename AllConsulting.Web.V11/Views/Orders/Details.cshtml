@@ -1,0 +1,52 @@
+﻿@model AllConsulting.Entities.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    @using (Html.BeginForm("ReOrder", "Orders"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ID)
+        <p style="text-align: right;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" }) 
+            <input type="submit" value="ReOrder" class="btn btn-primary" /> 
+            <a class="btn btn-primary" href="/"><i class="glyphicon glyphicon-arrow-left"></i> Back to List</a>
+        </p>
+    }
+    <h4 class="alert alert-info">Order</h4>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.CustomerNumber): </strong> @Html.DisplayFor(model => model.CustomerNumber)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.DeliveryDate): </strong> @Html.DisplayFor(model => model.DeliveryDate)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.TotalPrice): </strong> @Html.DisplayFor(model => model.TotalPrice)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.Locked): </strong> @Html.DisplayFor(model => model.Locked)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.OnUpdate): </strong> @Html.DisplayFor(model => model.OnUpdate)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.OrderDate): </strong> @Html.DisplayFor(model => model.OrderDate)</li>
+    </ul>  
+    <h5 class="alert alert-info"><strong>Position</strong></h5>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Pieces</th>
+                <th>Number</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model.OrderPositions)
+            {
+                <tr>
+                    <td><span title="@o.Text" class="col-customerNumber">@o.Text</span></td>
+                    <td><span title="@o.Pieces" class="col-customerNumber">@o.Pieces</span></td>
+                    <td>@o.PositionNumber</td>
+                    <td>$@o.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

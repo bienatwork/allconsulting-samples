@@ -1,0 +1,36 @@
+﻿html{background: #cccccc;}
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+	background: #cccccc;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;background: #fff;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    /*max-width: 280px;*/
+}
+.form-horizontal .control-label{ text-align: left;}
+.error{ color: #ff0000;font-weight: normal;}
+input[type=text].error{ border: 1px solid #ff0000;color: #000;}
+
+.table.table-bordered tr th,.table.table-bordered tr:hover th{ background: #ccc;text-align: center;}
+.align-right{ text-align: right;}
+.txtSearch{ display: inline-block; width: 200px;text-align: left;}
+footer{ text-align: center;border: 1px solid #ccc;border-left: none;border-right: none;padding: 20px 0px;}
+footer p{ margin-bottom: 0;}
+.pagination{ margin: 0px 0px;}
+.col-customerNumber{ display: block;text-overflow: ellipsis;white-space: nowrap;width: 100%;overflow: hidden;max-width: 250px;}

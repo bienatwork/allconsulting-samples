@@ -1,0 +1,53 @@
+﻿@model AllConsulting.Entities.Order
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+<p class="error">@ViewBag.ConcurrencyErrorMessage</p>
+<h3>Are you sure you want to delete this?</h3>
+<div style="text-align: right;">@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.RowVersion)
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-primary" href="/"><i class="glyphicon glyphicon-arrow-left"></i> Back to List</a>
+    </div>
+}</div>
+<div>
+    <h4 class="alert alert-info">Order</h4>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.CustomerNumber): </strong> @Html.DisplayFor(model => model.CustomerNumber)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.DeliveryDate): </strong> @Html.DisplayFor(model => model.DeliveryDate)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.TotalPrice): </strong> @Html.DisplayFor(model => model.TotalPrice)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.Locked): </strong> @Html.DisplayFor(model => model.Locked)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.OnUpdate): </strong> @Html.DisplayFor(model => model.OnUpdate)</li>
+        <li class="list-group-item"><strong>@Html.DisplayNameFor(model => model.OrderDate): </strong> @Html.DisplayFor(model => model.OrderDate)</li>
+    </ul>  
+    <h5 class="alert alert-info"><strong>Position</strong></h5>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Text</th>
+                <th>Pieces</th>
+                <th>Number</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model.OrderPositions)
+            {
+                <tr>
+                    <td><span title="@o.Text" class="col-customerNumber">@o.Text</span></td>
+                    <td><span title="@o.Pieces" class="col-customerNumber">@o.Pieces</span></td>
+                    <td>@o.PositionNumber</td>
+                    <td>$@o.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table> 
+</div>

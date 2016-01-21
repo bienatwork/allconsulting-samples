@@ -1,0 +1,96 @@
+﻿ @model PagedList.IPagedList<AllConsulting.Entities.Order>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List Order</h2>
+@using (Html.BeginForm("Index", "Orders", FormMethod.Get, new {id="formIndex"}))
+{
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-8" style="text-align: right">
+            
+            @Html.TextBox("searchString", null, new { @class = "form-control align-right txtSearch", placeholder = "Search..." })
+            <a class="btn btn-primary" href="/Orders/Create"><i class='glyphicon glyphicon-plus'></i> Order</a>
+        </div>
+    </div> <br/>
+    <script type="text/javascript">
+        $(function() {
+            $("#searchString").blur(function (e) {
+                if (this.value.length > 0) {
+                    $(this).closest("form").submit();
+                } else {
+                    location.assign("/");
+                }
+            });
+        });
+    </script>
+}
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>Customer Number</th><th>Delivery Date</th><th>Total Price</th><th>Order Date</th><th>OnUpdate</th><th>Locked </th><th style="text-align: center">Actions</th>
+    </tr>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <span title="@Html.DisplayFor(modelItem => item.CustomerNumber)" class="col-customerNumber">@Html.DisplayFor(modelItem => item.CustomerNumber)</span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnUpdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Locked)
+            </td>
+            <td style="text-align: center">
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary btn-xs" }) 
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-success btn-xs" }) 
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-danger btn-xs" })
+            </td>
+        </tr>
+    }
+
+</table>
+@using (Html.BeginForm("Index", "Orders", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.DropDownList("sortColumn", new List<SelectListItem>()
+        {
+            //new SelectListItem() { Text = "Select sort", Value = "" },
+            new SelectListItem() { Text = "Customer Number", Value = "customerorder" } ,
+            new SelectListItem() { Text = "Delivery Date", Value = "deliverydate" },
+            new SelectListItem() { Text = "Total Price", Value = "totalprice" },
+            new SelectListItem() { Text = "Order Date", Value = "orderdate" }
+
+        }, new { @class = "form-control" })
+        </div>
+        <div class="col-sm-3">
+            @Html.DropDownList("sortBy", new List<SelectListItem>()
+            {
+                //new SelectListItem() { Text = "By", Value = "" },
+                new SelectListItem() { Text = "Ascending", Value = "asc" },
+                new SelectListItem() { Text = "Descending", Value = "desc" } 
+            }, new { @class = "form-control" })
+        </div>
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-sort"></i> Apply sort</button>
+        </div>
+        <div class="col-sm-3" style="text-align: right;">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortColumn = ViewBag.sortColumn, sortBy = ViewBag.sortBy })) 
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function() {
+        orderUrl();
+    });
+</script>

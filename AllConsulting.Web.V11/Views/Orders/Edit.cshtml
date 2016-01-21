@@ -1,0 +1,148 @@
+﻿@using Newtonsoft.Json
+@model AllConsulting.Entities.Order
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10" style="text-align: right;">
+                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+                <a  class="btn btn-primary" href="/"><i class="glyphicon glyphicon-arrow-left"></i> Back to List</a>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Order</h4>
+            </div>
+            <div class="panel-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger alert alert-danger" })
+                @Html.HiddenFor(model => model.ID)
+                @Html.HiddenFor(model => model.RowVersion)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CustomerNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CustomerNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CustomerNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DeliveryDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="input-group datepicker">
+                            @*, dataDateFormat = "dd/MM/yyyy"*@
+                            @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", tabindex = "-1" } })
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", tabindex = "-1", @data_val = "false" } })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="hdPosition" name="hdPosition" value="@JsonConvert.SerializeObject(Model.OrderPositions.Select(o => new {
+                                                                          Text = o.Text, Pieces = o.Pieces,
+                                                                          Price = o.Price,
+                                                                          Total = o.Total,
+                                                                          OrderID = o.OrderID,
+                                                                          PositionNumber = o.PositionNumber, ID = o.ID }))" />
+        <input type="hidden" id="hdPositionDelete" name="hdPositionDelete" value="[]" />
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4 class="panel-title">Position</h4></div>
+            <div class="panel-body">
+                <p style="text-align: right">
+                    <button id="cmdPosition" type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Position</button>
+                </p>
+                <table id="tbPosition" class="table table-bordered clear">
+                    <thead>
+                        <tr>
+                            <th>Text</th>
+                            <th>Pieces</th>
+                            <th>Number</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+<form id="frmPositionControls" method="POST" action="/">
+    <div id="frmPosition" data-action="add" data-id="-1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header alert alert-info">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">New Position</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <p><strong>Text</strong></p>
+                            <input id="txtText" name="txtText" type="text" required data-msg-required="Text not empty." class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <p><strong>Pieces</strong></p>
+                            <input id="txtPieces" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <p><strong>Number</strong></p>
+                            <input id="txtNumber" name="txtNumber" required data-rule-min="1" data-rule-digits="true" type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <p><strong>Price</strong></p>
+                            <input id="txtPrice" name="txtPrice" type="text" required data-rule-min="0" data-rule-number="true" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="frmPositionSave" class="btn btn-primary">Save</button>
+                    <button type="button" id="frmPositionClose" class="btn btn-default">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    ordersEdit();
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
