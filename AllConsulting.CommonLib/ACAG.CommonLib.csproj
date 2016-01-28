@@ -7,8 +7,8 @@
     <ProjectGuid>{8BC7EA0B-8D70-46F5-A2CF-D00B16077CC1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AllConsulting.CommonLib</RootNamespace>
-    <AssemblyName>AllConsulting.CommonLib</AssemblyName>
+    <RootNamespace>ACAG.CommonLib</RootNamespace>
+    <AssemblyName>ACAG.CommonLib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
