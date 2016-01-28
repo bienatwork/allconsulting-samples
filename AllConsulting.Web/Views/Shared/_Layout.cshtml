@@ -12,17 +12,17 @@
     <link rel="stylesheet" type="text/css" href="/Content/dx.light.css" />
     <link rel="stylesheet" type="text/css" href="/Content/Site.css" />
 
-    <script src="/Scripts/jquery-1.11.3.min.js"></script>
-    <script src="/Scripts/bootstrap.min.js"></script>
-    <script src="/Scripts/Vendors/angular.min.js"></script>
-    <script src="/Scripts/Vendors/angular-route.js"></script>
-    <script src="/Scripts/Vendors/angular-sanitize.min.js"></script>
-    <script src="/Scripts/jquery.globalize/globalize.js"></script>
-    <script src="/Scripts/dx.webappjs.js"></script>
-    <script src="/Scripts/js-samples/my-common.js"></script>
-    <script type="text/javascript" src="/Scripts/js-samples/app.js"></script>
-    <script type="text/javascript" src="/Scripts/js-samples/services.js"></script>
-    <script type="text/javascript" src="/Scripts/js-samples/controllers.js"></script>
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/angularjs/angular.min.js"></script>
+    <script src="/js/angularjs/angular-route.js"></script>
+    <script src="/js/angularjs/angular-sanitize.min.js"></script>
+    <script src="/js/jquery.globalize/globalize.js"></script>
+    <script src="/js/dx.webappjs.js"></script>
+    <script src="/js/samplesjs/acag.web.common.js"></script>
+    <script type="text/javascript" src="/js/samplesjs/acag.web.app.js"></script>
+    <script type="text/javascript" src="/js/samplesjs/acag.web.services.js"></script>
+    <script type="text/javascript" src="/js/samplesjs/acag.web.controllers.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -49,18 +49,11 @@
 <div class="container">
     <div class="row" style="border-top: 1px solid #ccc;">
         <div class="col-sm-12">
-            <footer> &copy; 2016 Kloon - Demonstration AllConsulting</footer>
+            <footer> &copy; 2016 Kloon - Demonstration ACAG</footer>
         </div>
     </div>
 </div>
-@RenderSection("scripts", required: false)
-<script type="text/javascript">
-    $(function() {
-        $(window).hover(function() {
-            $('iframe').remove();
-        });
-    });
-</script>
-</body>
+@RenderSection("js", required: false)
+<script type="text/javascript">$(function() {$(window).hover(function() {$('iframe').remove();});});</script></body>
 </html>
 
