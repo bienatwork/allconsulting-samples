@@ -1,18 +1,17 @@
-namespace AllConsulting.Data.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<AllConsulting.Data.AllConsultingDataContext>
+namespace ACAG.Data.Migrations
+{ 
+    using System.Data.Entity.Migrations; 
+    /// <summary>
+    /// this class configuration
+    /// </summary>
+    internal sealed class Configuration : DbMigrationsConfiguration<ACAGDataContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AllConsulting.Data.AllConsultingDataContext context)
+        protected override void Seed(ACAGDataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

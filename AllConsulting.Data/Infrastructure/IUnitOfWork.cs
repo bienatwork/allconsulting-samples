@@ -1,11 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Infrastructure
+// *****************************************************************************************
+//
+// Name:		IUnitOfWork.cs
+//
+// Created:		28.01.2016 ACAG  
+// Modified:	28.01.2016 ACAG  	: Creation 
+//
+// *****************************************************************************************
 
-namespace AllConsulting.Data.Infrastructure
+namespace ACAG.Data.Infrastructure
 {
+    /// <summary>
+    /// Definition IUnitOfWork
+    /// </summary>
     public interface IUnitOfWork
     {
         void Commit();

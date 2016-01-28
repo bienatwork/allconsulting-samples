@@ -7,8 +7,8 @@
     <ProjectGuid>{9C692300-1C92-4A31-AFA5-F1D9E2AD2674}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AllConsulting.Data</RootNamespace>
-    <AssemblyName>AllConsulting.Data</AssemblyName>
+    <RootNamespace>ACAG.Data</RootNamespace>
+    <AssemblyName>ACAG.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -69,9 +69,9 @@
     <Compile Include="Repositories\IEntityBaseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AllConsulting.Entities\AllConsulting.Entities.csproj">
+    <ProjectReference Include="..\AllConsulting.Entities\ACAG.Entities.csproj">
       <Project>{bf32cd96-4d60-4567-ac49-1391ee7cb38d}</Project>
-      <Name>AllConsulting.Entities</Name>
+      <Name>ACAG.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

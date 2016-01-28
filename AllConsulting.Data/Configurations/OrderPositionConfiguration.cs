@@ -1,7 +1,19 @@
-﻿using AllConsulting.Entities;
+﻿// Configurations
+// *****************************************************************************************
+//
+// Name:		Configurations.cs
+//
+// Created:		28.01.2016 ACAG  
+// Modified:	28.01.2016 ACAG  	: Creation 
+//
+// *****************************************************************************************
+using ACAG.Entities;
 
-namespace AllConsulting.Data.Configurations
+namespace ACAG.Data.Configurations
 {
+    /// <summary>
+    /// this is class OrderPositionConfiguration
+    /// </summary>
     public class OrderPositionConfiguration : EntityBaseConfiguration<OrderPosition>
     {
         public OrderPositionConfiguration()

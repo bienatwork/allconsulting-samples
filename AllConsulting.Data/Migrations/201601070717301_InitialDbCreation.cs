@@ -1,4 +1,4 @@
-namespace AllConsulting.Data.Migrations
+namespace ACAG.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

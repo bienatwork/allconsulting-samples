@@ -1,18 +1,31 @@
-﻿using System;
+﻿// Infrastructure
+// *****************************************************************************************
+//
+// Name:		EntityBaseRepository.cs
+//
+// Created:		28.01.2016 ACAG  
+// Modified:	28.01.2016 ACAG  	: Creation 
+//
+// *****************************************************************************************
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
-using AllConsulting.Data.Infrastructure;
-using AllConsulting.Entities;
+using ACAG.Data.Infrastructure;
+using ACAG.Entities;
 
-namespace AllConsulting.Data.Repositories
+namespace ACAG.Data.Repositories
 {
+    /// <summary>
+    /// Entity Base Repository
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class EntityBaseRepository<T> : IEntityBaseRepository<T>
             where T : class, IEntityBase, new()
     {
 
-        private AllConsultingDataContext _dataContext;
+        private ACAGDataContext _dataContext;
 
         #region Properties
         protected IDbFactory DbFactory
@@ -21,7 +34,7 @@ namespace AllConsulting.Data.Repositories
             private set;
         }
 
-        protected AllConsultingDataContext DbContext
+        protected ACAGDataContext DbContext
         {
             get { return _dataContext ?? (_dataContext = DbFactory.Init()); }
         }

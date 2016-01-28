@@ -1,22 +1,46 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using AllConsulting.Data.Configurations;
-using AllConsulting.Entities;
+﻿// DataContext
+// *****************************************************************************************
+//
+// Name:		ACAGDataContext.cs
+//
+// Created:		28.01.2016 ACAG  
+// Modified:	28.01.2016 ACAG  	: Creation 
+//
+// *****************************************************************************************
 
-namespace AllConsulting.Data
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using ACAG.Data.Configurations;
+using ACAG.Entities;
+
+namespace ACAG.Data
 {
-    public class AllConsultingDataContext : DbContext
+
+    /// <summary>
+    /// Data Context
+    /// </summary>
+    public class ACAGDataContext : DbContext
     {
-        public AllConsultingDataContext()
-            : base("AllConsultingDataContext")
+        /// <summary>
+        /// Default constructor, initializes a new <see cref="ACAGDataContext"/>
+        /// </summary>
+        public ACAGDataContext()
+            : base("ACAGDataContext")
         {
         }
 
         #region Entity Set
-        
+        /// <summary>
+        /// Get and set Order 
+        /// </summary>
         public IDbSet<Error> ErrorSet { get; set; }
-
+        /// <summary>
+        /// Get and set Order 
+        /// </summary>
         public IDbSet<Order> OrderSet { get; set; }
+        /// <summary>
+        /// Get and set OrderPosition 
+        /// </summary>
         public IDbSet<OrderPosition> OrderPositionSet { get; set; }
 
         #endregion
@@ -25,7 +49,10 @@ namespace AllConsulting.Data
         {
             base.SaveChanges();
         }
-
+        /// <summary>
+        /// Override OnModelCreating
+        /// </summary>
+        /// <param name="modelBuilder">Object DbModelBuilder</param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
