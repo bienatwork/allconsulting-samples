@@ -1,29 +1,43 @@
-﻿using System;
+﻿// Order services
+// *****************************************************************************************
+//
+// Name:		SampleConsulting.cs
+//
+// Created:		28.01.2016 ACAG  
+// Modified:	28.01.2016 ACAG  	: Creation 
+//
+// *****************************************************************************************
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Linq; 
-using AllConsulting.Data.Infrastructure;
-using AllConsulting.Data.Repositories;
-using AllConsulting.Entities;
-using AllConsulting.Web.Dto; 
+using ACAG.Data.Infrastructure;
+using ACAG.Data.Repositories;
+using ACAG.Entities;
+using ACAG.Web.Models;
 
-namespace AllConsulting.Web.Services
-{
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "SampleConsulting" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select SampleConsulting.svc or SampleConsulting.svc.cs at the Solution Explorer and start debugging.
-    public class SampleConsulting : ISampleConsulting
+namespace ACAG.Web.Services
+{ 
+    /// <summary>
+    /// This class implements the interface  <see cref="ISampleConsulting"/>
+    /// </summary>
+    public class SampleConsulting : ISampleConsulting, IDisposable
     {
+        #region Fields
+
         private readonly IEntityBaseRepository<Order> _ordersRepository;
         private readonly IEntityBaseRepository<OrderPosition> _positionRepository;
         private IDbFactory _dbFactory;
         private IUnitOfWork _unitOfWork;
 
-        public SampleConsulting(IEntityBaseRepository<Order> ordersRepository, IEntityBaseRepository<OrderPosition> positionRepository)
-        {
-            _ordersRepository = ordersRepository;
-            _positionRepository = positionRepository;
-        }
 
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor, initializes a new <see cref="SampleConsulting class instance."/>
+        /// </summary>
         public SampleConsulting()
         {
             _dbFactory = new DbFactory();
@@ -31,10 +45,41 @@ namespace AllConsulting.Web.Services
             _ordersRepository = new EntityBaseRepository<Order>(_dbFactory);
             _positionRepository = new EntityBaseRepository<OrderPosition>(_dbFactory);
         }
-
-        public FilterOrderDto OrderGetList(int take, int skip, string sort, string searchFullOrder, string key)
+        /// <summary>
+        /// Constructor class SampleConsulting
+        /// </summary>
+        /// <param name="ordersRepository">ordersRepository</param>
+        /// <param name="positionRepository">positionRepository</param>
+        public SampleConsulting(
+            IEntityBaseRepository<Order> ordersRepository,
+            IEntityBaseRepository<OrderPosition> positionRepository)
         {
-            
+            _ordersRepository = ordersRepository;
+            _positionRepository = positionRepository;
+        }
+
+
+        #endregion 
+
+        #region Utls
+
+        public DateTime GetDateNow()
+        {
+            return DateTime.Now;
+        }
+
+        #endregion
+
+        #region Order
+
+        public FilterOrderModel OrderGetList(
+           int take,
+           int skip,
+           string sort,
+           string searchFullOrder,
+           string key)
+        {
+
             if (string.IsNullOrWhiteSpace(searchFullOrder)) searchFullOrder = string.Empty;
             // Dictionary<string, string> -- operation and value
             var list =
@@ -50,9 +95,9 @@ namespace AllConsulting.Web.Services
                             ||
                             (SqlFunctions.DateName("dd", x.DeliveryDate) + "/" +
                              SqlFunctions.DatePart("mm", x.DeliveryDate) + "/" +
-                             SqlFunctions.DateName("yyyy", x.DeliveryDate)).Contains(searchFullOrder)||
+                             SqlFunctions.DateName("yyyy", x.DeliveryDate)).Contains(searchFullOrder) ||
                              SqlFunctions.StringConvert(x.TotalPrice).Contains(searchFullOrder));
-            var result = new FilterOrderDto();
+            var result = new FilterOrderModel();
             result.TotalRows = list.Count();
             switch (sort.ToLower())
             {
@@ -81,57 +126,58 @@ namespace AllConsulting.Web.Services
                     list = list.OrderBy(x => x.TotalPrice);
                     break;
             }
-            result.ListOrder = list.Skip(skip).Take(take).Select(x => new OrderDto()
-            {
-                OrderId = x.ID,
-                OrderDate = x.OrderDate,
-                CustomerNumber = x.CustomerNumber,
-                DeliveryDate = x.DeliveryDate,
-                TotalPrice = x.TotalPrice
-            }).ToList();
-            return result; 
+            result.ListOrder = list.Skip(skip).Take(take).Select(
+                x => new OrderModel()
+                {
+                    OrderId = x.ID,
+                    OrderDate = x.OrderDate,
+                    CustomerNumber = x.CustomerNumber,
+                    DeliveryDate = x.DeliveryDate,
+                    TotalPrice = x.TotalPrice
+                }).ToList();
+            return result;
         }
 
-        public int AddOrder(OrderDto o)
+        public int AddOrder(OrderModel o)
         {
             if (o.ListPositionOrderDto.Count < 1)
-                return -1; 
+                return -1;
             var order = new Order();
             order.CustomerNumber = o.CustomerNumber.Trim();
             order.TotalPrice = o.TotalPrice;
             order.DeliveryDate = o.DeliveryDate;
-            order.OrderDate = DateTime.Now; 
+            order.OrderDate = DateTime.Now;
 
             _ordersRepository.Add(order);
             // commit
-            _unitOfWork.Commit(); 
-            foreach (var orderDto in o.ListPositionOrderDto)
+            _unitOfWork.Commit();
+            foreach (var OrderModel in o.ListPositionOrderDto)
             {
                 var positionOrder = new OrderPosition();
                 positionOrder.OrderID = order.ID;
-                positionOrder.Pieces = orderDto.Pieces != null ? orderDto.Pieces.Trim() : null;
-                positionOrder.PositionNumber = orderDto.PositionNumber;
-                positionOrder.Price = orderDto.Price;
-                positionOrder.Text = orderDto.Text != null ? orderDto.Text.Trim() : null;
-                positionOrder.Total = orderDto.Total;
+                positionOrder.Pieces = OrderModel.Pieces != null ? OrderModel.Pieces.Trim() : null;
+                positionOrder.PositionNumber = OrderModel.PositionNumber;
+                positionOrder.Price = OrderModel.Price;
+                positionOrder.Text = OrderModel.Text != null ? OrderModel.Text.Trim() : null;
+                positionOrder.Total = OrderModel.Total;
                 order.TotalPrice += positionOrder.Total;
-               _positionRepository.Add(positionOrder);
+                _positionRepository.Add(positionOrder);
             }
             _unitOfWork.Commit();
 
             return order.ID;
         }
 
-        public OrderDto OrderById(string id, string key)
+        public OrderModel OrderById(
+            string id,
+            string key)
         {
             int orderId;
             int.TryParse(id, out orderId);
             if (orderId < 1) return null;
             var order = _ordersRepository.GetSingle(orderId);
             if (order == null) return null;
-            //if (OrderSession.GetOrderSession(order.ID.ToString()) == null)
-            //    OrderSession.SetOrderSession(order.ID.ToString(), order.OnUpdate);
-            var o = new OrderDto();
+            var o = new OrderModel();
             o.CustomerNumber = order.CustomerNumber;
             o.DeliveryDate = order.DeliveryDate;
             o.OrderDate = order.OrderDate;
@@ -139,22 +185,24 @@ namespace AllConsulting.Web.Services
             o.TotalPrice = order.TotalPrice;
 
             var listposition = _positionRepository.FindBy(p => p.OrderID == orderId);
-            o.ListPositionOrderDto = new List<PositionOrderDto>();
+            o.ListPositionOrderDto = new List<PositionOrderModel>();
             foreach (var positionOrder in listposition)
             {
-                var possitionOrderDto = new PositionOrderDto();
-                possitionOrderDto.OrderId = positionOrder.OrderID;
-                possitionOrderDto.PositionOrderId = positionOrder.ID;
-                possitionOrderDto.PositionNumber = positionOrder.PositionNumber;
-                possitionOrderDto.Pieces = positionOrder.Pieces;
-                possitionOrderDto.Text = positionOrder.Text;
-                possitionOrderDto.Price = positionOrder.Price;
-                o.ListPositionOrderDto.Add(possitionOrderDto);
+                var possitionOrderModel = new PositionOrderModel();
+                possitionOrderModel.OrderId = positionOrder.OrderID;
+                possitionOrderModel.PositionOrderId = positionOrder.ID;
+                possitionOrderModel.PositionNumber = positionOrder.PositionNumber;
+                possitionOrderModel.Pieces = positionOrder.Pieces;
+                possitionOrderModel.Text = positionOrder.Text;
+                possitionOrderModel.Price = positionOrder.Price;
+                o.ListPositionOrderDto.Add(possitionOrderModel);
             }
-            return o; //JsonConvert.SerializeObject(o);
+            return o;
         }
-         
-        public int UpdateOrder(OrderDto o, string id)
+
+        public int UpdateOrder(
+            OrderModel o,
+            string id)
         {
             int orderId = 0;
             int.TryParse(id, out orderId);
@@ -162,7 +210,7 @@ namespace AllConsulting.Web.Services
             if (order != null)
             {
                 order.DeliveryDate = o.DeliveryDate;
-                order.CustomerNumber = o.CustomerNumber.Trim();  
+                order.CustomerNumber = o.CustomerNumber.Trim();
                 order.TotalPrice = 0;
                 foreach (var poDto in o.ListPositionOrderDto)
                 {
@@ -201,13 +249,55 @@ namespace AllConsulting.Web.Services
                 }
                 catch (Exception ex)
                 {
-                    
+
                     throw;
                 }
-                
+
             }
             return 1;
         }
+
+
+
+        public int DeleteOrder(int orderId)
+        {
+            if (orderId < 1) return -1;
+            var order = _ordersRepository.GetSingle(orderId);
+            _ordersRepository.Delete(order);
+            _unitOfWork.Commit();
+            return order.ID;
+        }
+
+        public OrderModel ReOrder(OrderModel o)
+        {
+            var order = new Order();
+            order.CustomerNumber = o.CustomerNumber.Trim();
+            order.DeliveryDate = null;
+            order.OrderDate = DateTime.Now;
+            order.TotalPrice = 0;
+            _ordersRepository.Add(order);
+            _unitOfWork.Commit();
+            foreach (var OrderModel in o.ListPositionOrderDto)
+            {
+                var positionOrder = new OrderPosition();
+                positionOrder.OrderID = order.ID;
+                positionOrder.Pieces = OrderModel.Pieces != null ? OrderModel.Pieces.Trim() : null;
+                positionOrder.PositionNumber = OrderModel.PositionNumber;
+                positionOrder.Price = OrderModel.Price;
+                positionOrder.Text = OrderModel.Text != null ? OrderModel.Text.Trim() : null;
+                positionOrder.Total = OrderModel.Total;
+                order.TotalPrice += positionOrder.Total;
+                _positionRepository.Add(positionOrder);
+            }
+            _unitOfWork.Commit();
+            return OrderById(
+                order.ID.ToString(),
+                DateTime.Now.TimeOfDay.ToString());
+        }
+
+        #endregion
+
+        #region Position
 
         public int DeletePossitionOrder(List<int> listOrderId)
         {
@@ -217,59 +307,27 @@ namespace AllConsulting.Web.Services
             {
                 if (id < 1) continue;
                 var positionOrder = _positionRepository.GetSingle(id);
-                _positionRepository.Delete(positionOrder); 
-                
+                _positionRepository.Delete(positionOrder);
+
             }
             _unitOfWork.Commit();
             return 1;
         }
 
-        public int DeleteOrder(int orderId)
-        {
-            if (orderId < 1) return -1;
-            var order = _ordersRepository.GetSingle(orderId);
-            _ordersRepository.Delete(order);
-            _unitOfWork.Commit();
-            return order.ID;//OrderRepository.Instance.DeleteOrder(orderId);
-        }
-
-        public OrderDto ReOrder(OrderDto o)
-        {
-            var order = new Order();
-            order.CustomerNumber = o.CustomerNumber.Trim();
-            order.DeliveryDate = null;
-            order.OrderDate = DateTime.Now;
-            order.TotalPrice = 0;
-            _ordersRepository.Add(order);
-            _unitOfWork.Commit();
-            foreach (var orderDto in o.ListPositionOrderDto)
-            {
-                var positionOrder = new OrderPosition();
-                positionOrder.OrderID = order.ID;
-                positionOrder.Pieces = orderDto.Pieces != null ? orderDto.Pieces.Trim() : null;
-                positionOrder.PositionNumber = orderDto.PositionNumber;
-                positionOrder.Price = orderDto.Price;
-                positionOrder.Text = orderDto.Text != null ? orderDto.Text.Trim() : null;
-                positionOrder.Total = orderDto.Total;
-                order.TotalPrice += positionOrder.Total;
-               _positionRepository.Add(positionOrder);
-            }
-            _unitOfWork.Commit();
-            return OrderById(order.ID.ToString(), DateTime.Now.TimeOfDay.ToString());
-        }
-
-        public List<PositionOrderDto> GetPossitionList(string id, string key)
+        public List<PositionOrderModel> GetPossitionList(
+          string id,
+          string key)
         {
             int orderId = 0;
             int.TryParse(id, out orderId);
             if (orderId < 1) return null;
-            List<PositionOrderDto> list = null;
+            List<PositionOrderModel> list = null;
             var positionOrder =
                 _positionRepository.FindBy(po => po.OrderID == orderId).OrderByDescending(o => o.PositionNumber);
-            list = new List<PositionOrderDto>();
+            list = new List<PositionOrderModel>();
             foreach (var op in positionOrder)
             {
-                var opDto = new PositionOrderDto();
+                var opDto = new PositionOrderModel();
                 opDto.OrderId = op.OrderID;
                 opDto.Pieces = op.Pieces;
                 opDto.Text = op.Text;
@@ -279,11 +337,26 @@ namespace AllConsulting.Web.Services
                 list.Add(opDto);
             }
             return list;
+        } 
+
+        #endregion
+
+        #region Disposable
+        /// <summary>
+        /// Disponse
+        /// </summary>
+        public void Dispose()
+        { 
+            _dbFactory = null;
+            _unitOfWork = null;
         }
 
-        public DateTime GetDateNow()
+        ~SampleConsulting()
         {
-            return DateTime.Now;
+            Dispose();
         }
+
+        #endregion
+         
     }
 }
