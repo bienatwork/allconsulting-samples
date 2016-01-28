@@ -5,7 +5,7 @@ using System.Web.Routing;
 using System.Web.Http;
 using System.Web.Optimization;
 
-namespace AllConsulting.Web
+namespace ACAG.Web
 {
     public class Global : HttpApplication
     {
@@ -13,8 +13,7 @@ namespace AllConsulting.Web
         {
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            Bootstrapper.Run();
+            GlobalConfiguration.Configure(WebApiConfig.Register); 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             GlobalConfiguration.Configuration.EnsureInitialized();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
