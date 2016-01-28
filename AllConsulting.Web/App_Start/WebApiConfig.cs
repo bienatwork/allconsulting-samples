@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace AllConsulting.Web
+namespace ACAG.Web
 {
     public static class WebApiConfig
     {

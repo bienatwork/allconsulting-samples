@@ -1,13 +1,13 @@
 ﻿using System.Data.Entity;
 using System.Reflection;
 using System.Web.Http;
-using AllConsulting.Data;
-using AllConsulting.Data.Infrastructure;
-using AllConsulting.Data.Repositories;
+using ACAG.Data;
+using ACAG.Data.Infrastructure;
+using ACAG.Data.Repositories;
 using Autofac;
 using Autofac.Integration.WebApi;
 
-namespace AllConsulting.Web
+namespace ACAG.Web
 {
     public class AutofacWebapiConfig
     {
@@ -27,7 +27,7 @@ namespace AllConsulting.Web
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             // EF HomeCinemaContext
-            builder.RegisterType<AllConsultingDataContext>()
+            builder.RegisterType<ACAGDataContext>()
                    .As<DbContext>()
                    .InstancePerRequest();
 
