@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using ACAG.Samples.Web.Models;
+using ACAG.Samples.BusinessServices.Models;
 
 namespace ACAG.Samples.Web.Services
 {
@@ -67,7 +67,7 @@ namespace ACAG.Samples.Web.Services
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
             UriTemplate = "list-orders/{key}")
         ]
-        FilterOrderModel OrderGetList(
+        SearchResultModel OrderGetList(
             int take,
             int skip,
             string sort,
@@ -207,7 +207,7 @@ namespace ACAG.Samples.Web.Services
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "position/{id}/{key}")]
-        List<PositionOrderModel> GetPossitionList(
+        List<OrderPositionModel> GetPossitionList(
             string id,
             string key);
         /// <summary>

@@ -27,6 +27,9 @@ namespace ACAG.Samples.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             GlobalConfiguration.Configuration.EnsureInitialized();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //IContainer container = Bootstrapper.BuildContainer();
+            //AutofacHostFactory.Container = container;
         }
     }
 }

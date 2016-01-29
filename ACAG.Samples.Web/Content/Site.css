@@ -22,15 +22,15 @@ body {font-size: .85em; color: #232323;background-color: #D9D9D9;font-family: Ta
 .p-order,.p-order .box-grid{font-family: Tahoma !important;}
 .dx-row.dx-column-lines.dx-header-row{ background-color: #304967;color: #ffffff;}
 
-#gridPosition .dx-datagrid-headers{border: 1px solid #ccc;border-top: none;border-bottom: none;}
-#gridPosition .dx-datagrid-rowsview{ border: 1px solid #ccc;border-top: none;}
+#grdPosition .dx-datagrid-headers{border: 1px solid #ccc;border-top: none;border-bottom: none;}
+#grdPosition .dx-datagrid-rowsview{ border: 1px solid #ccc;border-top: none;}
 
 .grid-order{ margin-top: 10px;}
 .grid-order .dx-datagrid-headers{border: 1px solid #ccc;border-bottom: none;}
 .grid-order .dx-datagrid-rowsview{ border: 1px solid #ccc;border-top: none;}
-.grid-order table tbody tr:nth-child(2n),.dx-datagrid-table.dx-datagrid-table-fixed tr:nth-child(2n){ background-color: #eee;}
+.grid-order table tbody tr:nth-child(2n),.dx-datagrid-table.dx-datagrid-table-fixed tr.dx-data-row:nth-child(2n){ background-color: #eee;}
 
-.grid-order table tbody tr:hover,.dx-datagrid-table.dx-datagrid-table-fixed tr:hover{background-color: #eee;}
+.grid-order table tbody tr:hover,.dx-datagrid-table.dx-datagrid-table-fixed tr.dx-data-row:hover{background-color: #eee;}
 
 .panel-detail{ text-align: right;padding-top: 10px;}
 
@@ -38,7 +38,7 @@ body {font-size: .85em; color: #232323;background-color: #D9D9D9;font-family: Ta
 
 .pn-control{ position: relative;}
 #summary{ padding-left: 20px;}
-#btnAdd{position: absolute;z-index: 5;right: 15%;top: 1px;}
+#btnAdd{    position: relative; z-index: 5; /* right: 15%; */ top: 1px; float: right; margin-left: 5px;}
 
 #frmPosition p strong{ font-size: 14px;font-weight: normal;}
 /* Set padding to keep content from hitting the edges */

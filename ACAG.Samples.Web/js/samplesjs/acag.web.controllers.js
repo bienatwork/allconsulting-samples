@@ -119,7 +119,7 @@
                                         var dgPosition = $('#gridPosition').dxDataGrid("instance");
                                         if (dgPosition != undefined) dgPosition.clearFilter();
                                         var order = info.data;
-                                        order.ListPositionOrderDto = data;
+                                        order.OrderPositions = data;
                                         order.DeliveryDate = order.DeliveryDate != null ? formatDateToJson(order.DeliveryDate) : null;
                                         order.OrderDate = order.OrderDate != null ? formatDateToJson(order.OrderDate) : null;
                                         orderService.reOrder({ order: order }).success(function(response1) {
@@ -164,7 +164,7 @@
         $scope.dateFuture = null;
         $scope.objectPosition = {};
         $scope.order = new OrderNew();
-        $scope.ListPositionOrderDto = [];
+        $scope.OrderPositions = [];
         $scope.listPositionOrderRemove = [];
         $scope.showError = false;
 
@@ -179,9 +179,9 @@
                     d.DeliveryDate = d.DeliveryDate != null ? formatDateJsonToDate(d.DeliveryDate) : null;
                     d.OrderDate = d.OrderDate != null ? formatDateJsonToDate(d.OrderDate) : null;
                     $scope.order = d;
-                    $scope.ListPositionOrderDto = [];
+                    $scope.OrderPositions = [];
                     $scope.listPositionOrderRemove = [];
-                    $scope.ListPositionOrderDto = $.extend($scope.ListPositionOrderDto, d.ListPositionOrderDto);
+                    $scope.OrderPositions = $.extend($scope.OrderPositions, d.OrderPositions);
                     $scope.popupBtnReorderVisible = true;
 
                     $scope.titleForm = 'Edit Order';
@@ -206,7 +206,7 @@
         $scope.formBtnAddNewOption = function(e) {
             var result = e.validationGroup.validate();
             if (result.isValid) {
-                if ($scope.order.ListPositionOrderDto.length < 1) {
+                if ($scope.order.OrderPositions.length < 1) {
                     $("#valsErrors").append('<div style="color:#ff0000;">Order must have at least one OrderPosition</div>');
                     $scope.showError = true;
                     return;
@@ -299,7 +299,7 @@
                     position.Pieces = $scope.objectPosition.Pieces;
                     position.Price = $scope.objectPosition.Price;
                     position.Total = position.PositionNumber * position.Price;
-                    $scope.order.ListPositionOrderDto.push(position);
+                    $scope.order.OrderPositions.push(position);
                     DevExpress.ui.notify('Add position successful and continue add...', "success", 4000);
                     // refresh form
                     $scope.objectPosition.Text = '';
@@ -314,14 +314,14 @@
 
                 } else {
                     var index = $scope.objectPosition.PositionOrderId;
-                    var positionOrderId = $scope.order.ListPositionOrderDto[index].PositionOrderId;
-                    $scope.order.ListPositionOrderDto[index] = angular.extend({}, $scope.objectPosition);
-                    $scope.order.ListPositionOrderDto[index].PositionOrderId = positionOrderId;
+                    var positionOrderId = $scope.order.OrderPositions[index].PositionOrderId;
+                    $scope.order.OrderPositions[index] = angular.extend({}, $scope.objectPosition);
+                    $scope.order.OrderPositions[index].PositionOrderId = positionOrderId;
 
                     $("#popupPosition").dxPopup('instance').hide();
                 }
 
-                $scope.ListPositionOrderDto = angular.extend([], $scope.order.ListPositionOrderDto);
+                $scope.OrderPositions = angular.extend([], $scope.order.OrderPositions);
 
                 // Hide the validation summary area
                 $scope.showPositionErrors = false;
@@ -363,8 +363,8 @@
                 cellTemplate: function(cell, options) {
                     $('<span title="Edit"/>').addClass('btn btn-info btn-xs mr-right10').on('click', function(e) {
                         options.component.byKey(options.key).done(function(o) {
-                            var index = $scope.order.ListPositionOrderDto.indexOf(o);
-                            $scope.objectPosition = angular.extend({}, $scope.order.ListPositionOrderDto[index]);
+                            var index = $scope.order.OrderPositions.indexOf(o);
+                            $scope.objectPosition = angular.extend({}, $scope.order.OrderPositions[index]);
                             $scope.objectPosition.PositionOrderId = index;
                             $scope.formTitlePopupPosition = "Edit Position"; //" - " + $scope.objectPosition.Text;
                             $("#popupPosition").dxPopup('instance').show();
@@ -380,11 +380,11 @@
                                     dataGrid.byKey(options.key).done(function(o) {
                                         if (o.PositionOrderId > 0) {
                                             $scope.listPositionOrderRemove.push(o.PositionOrderId);
-                                            $scope.order.ListPositionOrderDto.splice($scope.order.ListPositionOrderDto.indexOf(o), 1);
-                                            $scope.ListPositionOrderDto = angular.extend([], $scope.order.ListPositionOrderDto);
+                                            $scope.order.OrderPositions.splice($scope.order.OrderPositions.indexOf(o), 1);
+                                            $scope.OrderPositions = angular.extend([], $scope.order.OrderPositions);
                                         } else {
-                                            $scope.order.ListPositionOrderDto.splice($scope.order.ListPositionOrderDto.indexOf(o), 1);
-                                            $scope.ListPositionOrderDto = angular.extend([], $scope.order.ListPositionOrderDto);
+                                            $scope.order.OrderPositions.splice($scope.order.OrderPositions.indexOf(o), 1);
+                                            $scope.OrderPositions = angular.extend([], $scope.order.OrderPositions);
                                         }
                                         dataGrid.clearFilter();
                                         dataGrid.refresh();
@@ -414,5 +414,5 @@ function OrderNew() {
     this.DeliveryDate = null;
     this.TotalPrice = 0;
     this.OrderDate = new Date();
-    this.ListPositionOrderDto = [];
+    this.OrderPositions = [];
 }

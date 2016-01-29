@@ -39,7 +39,7 @@ namespace ACAG.Samples.Web
         {
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            // EF HomeCinemaContext
+            // EF DataContext
             builder.RegisterType<ACAGDataContext>()
                    .As<DbContext>()
                    .InstancePerRequest();

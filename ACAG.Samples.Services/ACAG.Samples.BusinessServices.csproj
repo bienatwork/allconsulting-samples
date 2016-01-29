@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9C692300-1C92-4A31-AFA5-F1D9E2AD2674}</ProjectGuid>
+    <ProjectGuid>{800D17A6-D84A-4D8D-BBE4-95F59863F1A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ACAG.Samples.Data</RootNamespace>
-    <AssemblyName>ACAG.Samples.Data</AssemblyName>
+    <RootNamespace>ACAG.Samples.BusinessServices</RootNamespace>
+    <AssemblyName>ACAG.Samples.BusinessServices</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -32,17 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="FluentValidation, Version=6.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.1.0.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,45 +46,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACAGDataContext.cs" />
-    <Compile Include="Configurations\EntityBaseConfiguration.cs" />
-    <Compile Include="Configurations\OrderConfiguration.cs" />
-    <Compile Include="Configurations\OrderPositionConfiguration.cs" />
-    <Compile Include="Infrastructure\DbFactory.cs" />
-    <Compile Include="Infrastructure\Disposable.cs" />
-    <Compile Include="Infrastructure\IDbFactory.cs" />
-    <Compile Include="Infrastructure\IUnitOfWork.cs" />
-    <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201601290641400_InitialDb.cs" />
-    <Compile Include="Migrations\201601290641400_InitialDb.Designer.cs">
-      <DependentUpon>201601290641400_InitialDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Abstracts\IOrderBusinessService.cs" />
+    <Compile Include="Abstracts\IOrderPositionBusinessService.cs" />
+    <Compile Include="Extensions\EntityExtensions.cs" />
+    <Compile Include="Impls\OrderBusinessService.cs" />
+    <Compile Include="Impls\OrderPositionBusinessService.cs" />
+    <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\OrderPositionModel.cs" />
+    <Compile Include="Models\SearchResultModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\EntityBaseRepository.cs" />
-    <Compile Include="Repositories\IEntityBaseRepository.cs" />
-    <Compile Include="Repositories\IOrderPositionRepository.cs" />
-    <Compile Include="Repositories\IOrderRepository.cs" />
-    <Compile Include="Repositories\OrderPositionRepository.cs" />
-    <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Validators\OrderPositionValidator.cs" />
+    <Compile Include="Validators\OrderValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ACAG.Samples.CommonLib\ACAG.Samples.CommonLib.csproj">
+      <Project>{8BC7EA0B-8D70-46F5-A2CF-D00B16077CC1}</Project>
+      <Name>ACAG.Samples.CommonLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ACAG.Samples.Data\ACAG.Samples.Data.csproj">
+      <Project>{9c692300-1c92-4a31-afa5-f1d9e2ad2674}</Project>
+      <Name>ACAG.Samples.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ACAG.Samples.Entities\ACAG.Samples.Entities.csproj">
       <Project>{bf32cd96-4d60-4567-ac49-1391ee7cb38d}</Project>
       <Name>ACAG.Samples.Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601290641400_InitialDb.resx">
-      <DependentUpon>201601290641400_InitialDb.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
