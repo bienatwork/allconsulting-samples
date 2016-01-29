@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="ACAG.Web.Services.SampleConsulting" CodeBehind="SampleConsulting.svc.cs" %> 
